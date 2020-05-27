@@ -1,0 +1,23 @@
+@import "./search.less";
+@import './topbar.less';
+.m-header {
+  &>.el-row:nth-child(1)>.el-col {
+    .top-bar {
+      position: relative;
+      display: flex;
+      width: 1190px;
+      margin: 0 auto;
+      z-index: 9999;
+      height: 40px;
+      padding-left: 20px;
+    }
+  }
+
+  &>.el-row:nth-child(2)>.el-col {
+    background: #ffffff;
+    .search-panel {
+      width: 1190px;
+      margin: 0 auto;
+    }
+  }
+}

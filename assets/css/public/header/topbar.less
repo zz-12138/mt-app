@@ -1,0 +1,124 @@
+.m-header {
+  .top-bar {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+
+    .m-nav {
+      display: flex;
+      justify-content: flex-end;
+      height: 40px;
+
+      &>div {
+        display: flex;
+        align-items: center;
+      }
+
+      .list-title {
+        margin: 0 20px;
+        font-size: 14px;
+        cursor: pointer;
+
+        &>a {
+          color: #999999;
+        }
+      }
+
+      .list-site {
+        &:hover {
+          .sub-container {
+            display: flex;
+            animation: hideIndex .35s;
+          }
+
+          @keyframes hideIndex {
+            0% {
+              opacity: 0;
+              transform: translateY(90px) rotateY(45deg);
+            }
+
+            100% {
+              opacity: 1;
+              transform: translate(0, 0);
+            }
+          }
+        }
+
+        .sub-container {
+          position: absolute;
+          width: 1190px;
+          height: 200px;
+          background-color: white;
+          top: 40px;
+          left: 0;
+          box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
+          display: none;
+
+          .hotel {
+            flex: 3;
+
+            &>div {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-around;
+              margin: 8px 0;
+            }
+          }
+
+          .foot {
+            flex: 2;
+
+            &>div {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-around;
+              margin: 8px 0;
+            }
+          }
+
+          .movie {
+            flex: 1;
+
+            &>dd {
+              margin: 8px 0;
+              text-align: center;
+            }
+          }
+
+          .app {
+            flex: 4;
+
+            &>div {
+              display: flex;
+              padding: 0 15px;
+              margin-top: 10px;
+
+              dd {
+                flex: 1;
+                display: flex;
+
+                a {
+                  display: inline-block;
+                  margin: auto;
+                }
+              }
+
+              img {
+                width: 60px;
+                height: 60px;
+              }
+            }
+          }
+
+          &>dl>dt {
+            text-align: center;
+            padding: 18px 0;
+            font-size: 14px;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}
