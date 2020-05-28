@@ -6,30 +6,22 @@
       </el-col>
       <el-col :span="15" class="center">
         <div class="wrapper">
-          <el-input aria-placeholder="搜索商家或地点" v-model="search" @focus="focus" @blur="blur"></el-input>
+          <el-input aria-placeholder="搜索商家或地点" v-model="search" @focus="focus" @blur="blur" @input="input"></el-input>
           <button class="el-button el-button--primary" >  
             <i class="el-icon-search" />
           </button>
           <dl class="hotPlace" v-if="isHotPlace">
             <dt>热门搜索</dt>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
+            <dd v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">{{item.name}}</dd>
           </dl>
           <dl class="searchList" v-if="isSearchList">
-            <dd>火锅</dd>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
-            <dd>火锅</dd>
+            <dd v-for="(item, index) in searchList" :key="index">
+              {{item.name}}
+            </dd>
           </dl>
         </div>
         <p class="suggest">
-          <a href="#">庐山</a>
-          <a href="#">庐山</a>
-          <a href="#">庐山</a>
-          <a href="#">庐山</a>
+          <a href="#" v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">{{item.name}}</a>
         </p>
         <ul class="nav">
           <li>
@@ -58,11 +50,14 @@
 </template>
 
 <script>
+import _ from 'lodash'
 export default {
   data() {
     return {
       search: '',
-      isFocus: false
+      isFocus: false,
+      hotPlace:[],
+      searchList:[]
     }
   },
   computed: {
@@ -82,7 +77,19 @@ export default {
       setTimeout(() => {
         self.isFocus = false
       }, 200);
-    }
+    },
+    input: _.debounce(async function() {
+       let self = this
+       let city = self.$store.state.geo.position.city.replace('市', '')
+       self.searchList = []
+       let { status, data: {top} } = await self.$axios.get('/search/top', {
+         params: {
+           input: self.search,
+           city
+         }
+       })
+       self.searchList = top.slice(0,10)
+    }, 300)
   }
 };
 </script>

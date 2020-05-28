@@ -9,15 +9,21 @@
         @mouseover="over($event,innerIdx,idx)"
         :class="{active: innerIdx === item.currentIndex}"
       >{{innerItem}}</dd>
+      <!-- 内容 -->
+      <div class="ibody">
+        <artistic-item v-if="idx === 2"></artistic-item>
+        <span v-else>维护中...</span>
+      </div>
     </dl>
-    <!-- 内容 -->
   </section>
 </template>
 
 <script>
+import ArtisticItem from './artisticItem'
 export default {
   data() {
     return {
+      currentListIndex: null,
       list: [
         {
           title: "猫眼电影",
@@ -41,15 +47,35 @@ export default {
           ],
           type: "hotel",
           currentIndex: 0
+        },
+        {
+          title: "本城特色",
+          menu: ["全部", "约会聚餐", "SPA", "电影演出", "品质出游"],
+          type: "unique",
+          currentIndex: 0
         }
-      ]
+      ],
+      listInfo: {
+        all: [],
+        part: [],
+        spa: [],
+        movie: [],
+        travel: []
+      }
     };
   },
+  components: {
+    ArtisticItem
+  },
   methods: {
-    over(e, innerIdx, idx) {
+    async over(e, innerIdx, idx) {
       let _timer = setTimeout(() => {
         this.list[idx].currentIndex = innerIdx;
       }, 150);
+
+      if (idx === 2) {
+        console.log(idx)
+      }
     }
   }
 };
