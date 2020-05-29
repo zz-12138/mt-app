@@ -11,7 +11,7 @@
       >{{innerItem}}</dd>
       <!-- 内容 -->
       <div class="ibody">
-        <artistic-item v-if="idx === 2"></artistic-item>
+        <artistic-item v-if="idx === 2" :listInfo="listInfo[item.keyword]"></artistic-item>
         <span v-else>维护中...</span>
       </div>
     </dl>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import ArtisticItem from './artisticItem'
+import ArtisticItem from "./artisticItem";
 export default {
   data() {
     return {
@@ -50,31 +50,64 @@ export default {
         },
         {
           title: "本城特色",
-          menu: ["全部", "约会聚餐", "SPA", "电影演出", "品质出游"],
+          menu: ["景点", "美食", "丽人", "电影", "旅游"],
           type: "unique",
-          currentIndex: 0
+          currentIndex: 0,
+          keyword: "景点"
         }
       ],
       listInfo: {
-        all: [],
-        part: [],
-        spa: [],
-        movie: [],
-        travel: []
+        景点: [],
+        美食: [],
+        丽人: [],
+        电影: [],
+        旅游: []
       }
     };
   },
   components: {
     ArtisticItem
   },
+  mounted() {
+    this.getData("景点");
+  },
   methods: {
-    async over(e, innerIdx, idx) {
+    over(e, innerIdx, idx) {
       let _timer = setTimeout(() => {
         this.list[idx].currentIndex = innerIdx;
       }, 150);
-
       if (idx === 2) {
-        console.log(idx)
+        let keyword = this.list[idx].menu[innerIdx];
+        this.list[idx].keyword = keyword;
+        this.getData(keyword);
+      }
+    },
+    async getData(keyword) {
+      let self = this;
+      let {
+        status,
+        data: { count, pois }
+      } = await self.$axios.get("/search/resultsByKeywords", {
+        params: {
+          keyword,
+          city: self.$store.state.geo.position.city
+        }
+      });
+      if (status === 200 && count > 0) {
+        let res = pois
+          .filter(item => item.photos.length)
+          .map(item => {
+            return {
+              title: item.name,
+              pos: item.type.split(";")[0],
+              price: item.biz_ext.cost || "暂无",
+              img: item.photos[0].url,
+              url: "//abc.com"
+            };
+          });
+        self.listInfo[keyword] = res.slice(0, 6);
+      } else {
+        self.listInfo[keyword] = [];
       }
     }
   }

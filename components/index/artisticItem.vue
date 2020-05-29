@@ -1,20 +1,20 @@
 <template>
   <div class="m-istyle-item">
-    <li v-for="v in 6" :key="v">
+    <li v-for="(item, index) in listInfo" :key="index">
       <div class="image">
         <img
-          src="http://p1.meituan.net/iphoenix/6d810d14d775089be2ccacb206e1cd6a8979799.jpg@740w_416h_1e_1c"
+          :src="item.img"
           class="product-img"
         />
         <img src alt class="head-img" />
       </div>
       <div class="info">
-        <p class="item-title">7号线地铁湖工大站/拉德芳斯商业街/温馨</p>
+        <p class="item-title">{{item.title}}</p>
         <p class="item-info">
-          <span>整套1居室</span>
+          <span>{{item.pos}}</span>
         </p>
         <p class="item-price">
-          <span>￥</span>288
+          <span>￥</span>{{item.price}}
         </p>
       </div>
     </li>
@@ -22,7 +22,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    listInfo: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  }
+};
 </script>
 
 <style lang="less">
