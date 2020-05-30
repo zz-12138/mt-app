@@ -1,7 +1,7 @@
 <template>
   <div class="m-geo">
     <i class="el-icon-location">
-      <span>{{$store.state.geo.position.city}}</span>
+      <span>{{currentCity}}</span>
     </i>
     <nuxt-link class="change-city" to="/changeCity">切换城市</nuxt-link>
     <span>
@@ -20,8 +20,14 @@
 export default {
   data() {
     return {
-      selectCity: ["南昌", "景德镇", "上饶"]
+      selectCity: ["南昌", "景德镇", "上饶"],
+      currentCity: this.$store.state.geo.position.city
     };
+  },
+  watch: {
+    $route() {
+      console.log(this.$route.query.city)
+    }
   }
 };
 </script>
