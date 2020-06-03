@@ -12,14 +12,13 @@ router.get('/getPosition', async (ctx) => {
   let {
     status,
     data: {
-      province,
-      city
+      content
     }
-  } = await axios.get('http://cp-tools.cn/geo/getPosition')
+  } = await axios.get('https://api.map.baidu.com/location/ip?ak=3flw0USLk26hursZ5U8fb9vs6GwSguXh&ip=117.136.110.235')
   if (status === 200) {
     ctx.body = {
-      province,
-      city
+      province: '湖北省',
+      city: '武汉市'
     }
   } else {
     ctx.body = {

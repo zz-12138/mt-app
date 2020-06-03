@@ -7,21 +7,26 @@
       <el-col :span="15" class="center">
         <div class="wrapper">
           <el-input aria-placeholder="搜索商家或地点" v-model="search" @focus="focus" @blur="blur" @input="input"></el-input>
-          <button class="el-button el-button--primary" >  
+          <button class="el-button el-button--primary" @click="btnToInfo(search)">  
             <i class="el-icon-search" />
           </button>
           <dl class="hotPlace" v-if="isHotPlace">
             <dt>热门搜索</dt>
-            <dd v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">{{item.name}}</dd>
+            <dd v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">
+              <!-- <a :href=""></a> -->
+              <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
+            </dd>
           </dl>
           <dl class="searchList" v-if="isSearchList">
             <dd v-for="(item, index) in searchList" :key="index">
-              {{item.name}}
+              <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
             </dd>
           </dl>
         </div>
         <p class="suggest">
-          <a href="#" v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">{{item.name}}</a>
+          <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" 
+             v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" 
+             :key="index" @click.native="toInfo(item.name)">{{item.name}}</nuxt-link>
         </p>
         <ul class="nav">
           <li>
@@ -77,6 +82,12 @@ export default {
       setTimeout(() => {
         self.isFocus = false
       }, 200);
+    },
+    toInfo(item) {
+      this.search = item
+    },
+    btnToInfo(item) {
+      this.$router.push({ path: '/products', query: { keyword: item }})
     },
     input: _.debounce(async function() {
        let self = this

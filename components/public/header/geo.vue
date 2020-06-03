@@ -20,13 +20,13 @@
 export default {
   data() {
     return {
-      selectCity: ["南昌", "景德镇", "上饶"],
+      selectCity: ["黄冈", "十堰", "襄阳"],
       currentCity: this.$store.state.geo.position.city
     };
   },
   watch: {
     $route() {
-      console.log(this.$route.query.city)
+      // console.log(this.$route.query.city)
     }
   }
 };
