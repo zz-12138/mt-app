@@ -1,18 +1,27 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
-const Category = new Schema({
-  city: {
-    type: String
+const Cart = new Schema({
+  id: {
+    type: String,
+    require: true
   },
-  types: {
+  detail: {
     type: Array,
-    required: true
+    require: true
   },
-  area: {
-    type: Array,
-    required: true
+  cartNo: {
+    type: String,
+    require: true
+  },
+  user: {
+    type: String,
+    require: true
+  },
+  time: {
+    type: String,
+    require: true
   }
 })
 
-export default mongoose.model('Category', Category)
+export default mongoose.model('Cart', Cart)
