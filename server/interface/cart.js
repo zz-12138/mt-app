@@ -1,5 +1,4 @@
 import Router from 'koa-router';
-import axios from './utils/axios'
 import Cart from '../db/models/cart'
 import md5 from 'crypto-js/md5'
 

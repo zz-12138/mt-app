@@ -14,17 +14,17 @@
             <dt>热门搜索</dt>
             <dd v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" :key="index">
               <!-- <a :href=""></a> -->
-              <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
+              <nuxt-link :to="{path:'products',query:{keyword: item.name}}" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
             </dd>
           </dl>
           <dl class="searchList" v-if="isSearchList">
             <dd v-for="(item, index) in searchList" :key="index">
-              <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
+              <nuxt-link :to="{path:'products',query:{keyword: item.name}}" @click.native="toInfo(item.name)">{{ item.name }}</nuxt-link>
             </dd>
           </dl>
         </div>
         <p class="suggest">
-          <nuxt-link :to="'/products?keyword='+encodeURIComponent(item.name)" 
+          <nuxt-link :to="{path:'products',query:{keyword: item.name}}"
              v-for="(item, index) in $store.state.home.hotPlace.slice(0, 4)" 
              :key="index" @click.native="toInfo(item.name)">{{item.name}}</nuxt-link>
         </p>

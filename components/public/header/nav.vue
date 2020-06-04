@@ -1,11 +1,15 @@
 <template>
   <div class="m-nav">
-    <el-dropdown v-for="(item, index) in navList" :key="index">
+    <el-dropdown v-for="(item, index) in navList" :key="index" @command="handleCommand">
       <span class="list-title">
         <nuxt-link to="/exit">{{item.title}}</nuxt-link>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="(innerItem, index) in item.list" :key="index">{{innerItem}}</el-dropdown-item>
+        <el-dropdown-item
+          v-for="(innerItem, index) in item.list"
+          :key="index"
+          :command="index"
+        >{{innerItem}}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     <div class="list-site">
@@ -132,6 +136,20 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    handleCommand(command) {
+      const token = this.$store.state.token.token;
+      switch (command) {
+        case 0:
+          token
+            ? this.$router.push({ path: "/order" })
+            : this.$router.push({ path: "/login" });
+          break;
+        default:
+          break;
+      }
+    }
   }
 };
 </script>

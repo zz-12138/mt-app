@@ -54,5 +54,6 @@ module.exports = {
     */
     extend (config, ctx) {
     }
-  }
+  },
+  watchQuery: true
 }

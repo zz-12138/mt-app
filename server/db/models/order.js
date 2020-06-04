@@ -13,6 +13,10 @@ const Order = new Schema({
     type:String,
     require:true
   },
+  count: {
+    type: Number,
+    required: true
+  },
   total:{
     type:Number,
     require:true
